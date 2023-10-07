@@ -65,7 +65,14 @@ button {
     font-weight: bold;
     margin-top: 20px;
 }
-
+.correct-feedback{
+    background-color: #4CAF50; 
+    color: white;
+}
+.wrong-feedback{
+    background-color: #f5220e; 
+    color: white;
+}
 /* Add hover effect to button */
 button:hover {
     background-color: #ff8c00;

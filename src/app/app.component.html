@@ -11,12 +11,17 @@
     </div>
 
     <div id="answer-container">
-        <label for="answer">Your Answer:</label>
-       <input type="text" [(ngModel)]="userAnswer" #answerField (keydown.enter)="checkAnswer(answerField.value)" placeholder="Type your answer here">
-       <button (click)="checkAnswer(userAnswer)">Submit</button> 
+        <label for="answer">Ta réponse:</label>
+       <input type="text" [(ngModel)]="userAnswer" #answerField (keydown.enter)="checkAnswer(answerField.value)" [disabled]="isInputDisabled" placeholder="Tape ta réponse ici">
+       <button (click)="checkAnswer(userAnswer)">Confirme</button> 
     </div>
 
-    <div id="result"></div>
+    <div id="result">
+  <!-- Show green div when the answer is correct -->
+        <div *ngIf="isCorrect" class="feedback correct-feedback">Bonne Réponse: {{ previousQuestion }}  {{ previousAnswer }}</div>
+  <!-- Show red div when the answer is wrong -->
+        <div *ngIf="!isCorrect" class="feedback wrong-feedback">Mauvaise Réponse: {{ previousQuestion }}  {{ previousAnswer }}</div>
+    </div>
     
 </body>
 </html>

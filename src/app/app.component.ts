@@ -8,12 +8,16 @@ import { QuizService } from './quiz.service';
 })
 export class AppComponent implements OnInit {
   title = "app"
-  quizData = new Map<string, string>(); 
+  quizData = new Map<string, string>();
   currentIndex = 0;
-  questionText='';
-  userAnswer='';
+  questionText = '';
+  userAnswer = '';
+  isCorrect: boolean | undefined;
+  previousQuestion: string | undefined;
+  previousAnswer: string | undefined;
+  isInputDisabled=false;
 
-  constructor(private quizService: QuizService) {}
+  constructor(private quizService: QuizService) { }
 
   ngOnInit() {
     this.quizService.getQuizData().subscribe((data) => {
@@ -25,7 +29,7 @@ export class AppComponent implements OnInit {
       });
 
       // Shuffle the quiz data
-      //this.quizService.shuffleMap(this.quizData);
+      this.quizData=this.quizService.shuffleMap(this.quizData);
 
       // Display the first question
       this.displayQuestion();
@@ -33,30 +37,40 @@ export class AppComponent implements OnInit {
   }
 
   displayQuestion() {
-    if (this.currentIndex < this.quizData.size) {
+    if (this.currentIndex < this.quizData.size-1) {
       this.questionText = Array.from(this.quizData.keys())[this.currentIndex];
-      
+      this.userAnswer='';
     } else {
-      this.questionText = 'Quiz Finished!';// Quiz is finished
+      this.userAnswer='';
+      this.isInputDisabled=true;
+      this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
     }
   }
 
   checkAnswer(userAnswer: string) {
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
-    
-    if (userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase().trim()) {
-      console.log("good answer")
+    const pattern = new RegExp(userAnswer.toLowerCase().trim(), 'i');
+
+    if (pattern.test(correctAnswer.toLowerCase().trim())) {
       this.currentIndex++;
+      this.feedback(true, this.questionText, correctAnswer);
       this.displayQuestion();
       return true;
     } else {
-      console.log(userAnswer+" is not : "+correctAnswer)
+      this.currentIndex++;
+      this.feedback(false, this.questionText, correctAnswer);
+      this.displayQuestion();
       return false;
     }
+  }
+
+  feedback(positive: boolean, question: string, answer: string) {
+    this.isCorrect=positive;     
+    this.previousQuestion=question;
+    this.previousAnswer=answer;
   }
 
 
 
 
-  
 }
