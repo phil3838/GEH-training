@@ -18,10 +18,17 @@ export class AppComponent implements OnInit {
   previousAnswer: string | undefined;
   previousUserAnswer: string | undefined;
   isInputDisabled=false;
+  //Score
   correctAnswerCtn=0;
   wrongAnswerCtn=0
   rateCorrectAnswer: string | undefined;
-  
+  //Time
+  startTime= 0;
+  endTime= 0;
+  timeToAnswer: string | undefined;
+  listOfTime: number[] = [];
+  meanOfTimes: string | undefined;
+
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
@@ -56,6 +63,7 @@ export class AppComponent implements OnInit {
       this.isInputDisabled=true;
       this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
     }
+  this.startTime = performance.now();
   }
   updateRateCorrectAnswer() {
     let rate=(this.correctAnswerCtn/(this.correctAnswerCtn+this.wrongAnswerCtn))*100;
@@ -63,6 +71,7 @@ export class AppComponent implements OnInit {
   }
 
   checkAnswer(userAnswer: string) {
+    this.calculateTime();
     this.quizStarted=true;
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
     const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),'i');
@@ -88,6 +97,15 @@ export class AppComponent implements OnInit {
     this.previousQuestion=question;
     this.previousAnswer=answer;
     this.previousUserAnswer=userAnswer;
+  }
+
+  calculateTime(){
+    this.endTime=performance.now();
+    this.listOfTime.push((this.endTime-this.startTime)/1000);
+    this.timeToAnswer=((this.endTime-this.startTime)/1000).toFixed(1);
+    const totalElapsedTime = this.listOfTime.reduce((acc, time) => acc + time, 0);
+    const mean = totalElapsedTime / this.listOfTime.length;
+    this.meanOfTimes = mean.toFixed(2);
   }
 
 
