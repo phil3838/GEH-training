@@ -18,6 +18,9 @@ export class AppComponent implements OnInit {
   previousAnswer: string | undefined;
   previousUserAnswer: string | undefined;
   isInputDisabled=false;
+  correctAnswerCtn=0;
+  wrongAnswerCtn=0
+  rateCorrectAnswer: string | undefined;
   
   constructor(private quizService: QuizService) { }
 
@@ -31,7 +34,7 @@ export class AppComponent implements OnInit {
       });
 
       // Shuffle the quiz data
-      //this.quizData=this.quizService.shuffleMap(this.quizData);
+      this.quizData=this.quizService.shuffleMap(this.quizData);
 
       // Display the first question
       this.displayQuestion();
@@ -39,15 +42,24 @@ export class AppComponent implements OnInit {
   }
 
   displayQuestion() {
-    if (this.currentIndex < this.quizData.size-1) {
+    if (this.currentIndex < this.quizData.size) {
       this.questionText = Array.from(this.quizData.keys())[this.currentIndex];
       this.userAnswer='';
-      console.log(this.currentIndex)
+      //if an empty line is in the source.csv, it will skip it
+      if (this.questionText.length<5){
+        console.log("yo c'est vide");
+        this.currentIndex++;
+        this.displayQuestion();
+      }
     } else {
       this.userAnswer='';
       this.isInputDisabled=true;
       this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
     }
+  }
+  updateRateCorrectAnswer() {
+    let rate=(this.correctAnswerCtn/(this.correctAnswerCtn+this.wrongAnswerCtn))*100;
+    this.rateCorrectAnswer=rate.toFixed(2).toString()+"%";
   }
 
   checkAnswer(userAnswer: string) {
@@ -58,11 +70,15 @@ export class AppComponent implements OnInit {
       this.currentIndex++;
       this.feedback(true, this.questionText, correctAnswer,userAnswer);
       this.displayQuestion();
+      this.correctAnswerCtn++;
+    this.updateRateCorrectAnswer()
       return true;
     } else {
       this.currentIndex++;
       this.feedback(false, this.questionText, correctAnswer,userAnswer);
       this.displayQuestion();
+      this.wrongAnswerCtn++;
+    this.updateRateCorrectAnswer()
       return false;
     }
   }

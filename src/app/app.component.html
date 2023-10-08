@@ -4,8 +4,7 @@
     <title>Génie en Herbe</title>
 </head>
 <body>
-    <h1>Génie en herbe</h1>
-    
+    <br><br><br>
     <div id="question-container">
         <p id="question">{{ questionText }}</p>
     </div>
@@ -23,6 +22,14 @@
         <div *ngIf="!isCorrect" class="feedback wrong-feedback"> {{ previousQuestion }}  <br> Ta réponse: {{ previousUserAnswer }} <br> {{ previousAnswer }}</div>
     </div>
     
+    <div class="score">
+        <h1 id="scoreTitle">Answer Score</h1>
+        <p>Correct Answers: <span id="goodScore"> {{ correctAnswerCtn }}</span></p>
+        <p>Wrong Answers: <span id="wrongScore"> {{ wrongAnswerCtn }}</span></p>
+        <p>Rate: <span id="wrongScore"> {{ rateCorrectAnswer }}</span></p>
+
+
+    </div>
 
 </body>
 </html>

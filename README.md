@@ -12,3 +12,4 @@ Aller sur la page `http://localhost:4200/` et jouez !
 Les questions sont stockés en format .csv pour le moment <br>
 Le fichier source.csv est situé dans `src/assets/source.csv` <br>
 Le format est `question,réponse`
+<br>

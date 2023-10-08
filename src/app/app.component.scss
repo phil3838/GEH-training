@@ -1,5 +1,6 @@
 /* Reset some default browser styles */
-body, h1, p {
+body,
+p {
     margin: 0;
     padding: 0;
 }
@@ -10,7 +11,7 @@ body {
     text-align: center;
 }
 
-h1 {
+.mainTitle{
     background-color: #ff7700;
     color: #fff;
     padding: 20px;
@@ -29,7 +30,7 @@ h1 {
 
 #question {
     font-size: 21px;
-    color: #fff; 
+    color: #fff;
     margin-bottom: 10px;
     width: 100%;
 }
@@ -68,15 +69,22 @@ button {
     font-weight: bold;
     margin-top: 20px;
 }
-.correct-feedback{
-    background-color: #4CAF50; 
+
+.correct-feedback {
+    background-color: #4CAF50;
     color: white;
 }
-.wrong-feedback{
-    background-color: #f5220e; 
+
+.wrong-feedback {
+    background-color: #f5220e;
     color: white;
 }
+
 /* Add hover effect to button */
 button:hover {
     background-color: #ff8c00;
+}
+
+.scoreTitle {
+    color: #333;
 }
