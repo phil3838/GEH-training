@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   quizStarted=false;
   previousQuestion: string | undefined;
   previousAnswer: string | undefined;
+  previousUserAnswer: string | undefined;
   isInputDisabled=false;
   
   constructor(private quizService: QuizService) { }
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit {
       });
 
       // Shuffle the quiz data
-      this.quizData=this.quizService.shuffleMap(this.quizData);
+      //this.quizData=this.quizService.shuffleMap(this.quizData);
 
       // Display the first question
       this.displayQuestion();
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
     if (this.currentIndex < this.quizData.size-1) {
       this.questionText = Array.from(this.quizData.keys())[this.currentIndex];
       this.userAnswer='';
+      console.log(this.currentIndex)
     } else {
       this.userAnswer='';
       this.isInputDisabled=true;
@@ -51,25 +53,25 @@ export class AppComponent implements OnInit {
   checkAnswer(userAnswer: string) {
     this.quizStarted=true;
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
-    const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD"), 'i');
-
-    if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD"))) {
+    const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),'i');
+    if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
       this.currentIndex++;
-      this.feedback(true, this.questionText, correctAnswer);
+      this.feedback(true, this.questionText, correctAnswer,userAnswer);
       this.displayQuestion();
       return true;
     } else {
       this.currentIndex++;
-      this.feedback(false, this.questionText, correctAnswer);
+      this.feedback(false, this.questionText, correctAnswer,userAnswer);
       this.displayQuestion();
       return false;
     }
   }
 
-  feedback(positive: boolean, question: string, answer: string) {
+  feedback(positive: boolean, question: string, answer: string,userAnswer:string) {
     this.isCorrect=positive;     
     this.previousQuestion=question;
     this.previousAnswer=answer;
+    this.previousUserAnswer=userAnswer;
   }
 
 

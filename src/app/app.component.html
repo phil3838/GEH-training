@@ -20,7 +20,7 @@
   <!-- Show green div when the answer is correct -->
         <div *ngIf="isCorrect" class="feedback correct-feedback"> {{ previousQuestion }} <br>  {{ previousAnswer }}</div>
   <!-- Show red div when the answer is wrong -->
-        <div *ngIf="!isCorrect" class="feedback wrong-feedback"> {{ previousQuestion }} <br> {{ previousAnswer }}</div>
+        <div *ngIf="!isCorrect" class="feedback wrong-feedback"> {{ previousQuestion }}  <br> Ta réponse: {{ previousUserAnswer }} <br> {{ previousAnswer }}</div>
     </div>
     
 
