@@ -13,10 +13,11 @@ export class AppComponent implements OnInit {
   questionText = '';
   userAnswer = '';
   isCorrect: boolean | undefined;
+  quizStarted=false;
   previousQuestion: string | undefined;
   previousAnswer: string | undefined;
   isInputDisabled=false;
-
+  
   constructor(private quizService: QuizService) { }
 
   ngOnInit() {
@@ -48,10 +49,11 @@ export class AppComponent implements OnInit {
   }
 
   checkAnswer(userAnswer: string) {
+    this.quizStarted=true;
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
-    const pattern = new RegExp(userAnswer.toLowerCase().trim(), 'i');
+    const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD"), 'i');
 
-    if (pattern.test(correctAnswer.toLowerCase().trim())) {
+    if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD"))) {
       this.currentIndex++;
       this.feedback(true, this.questionText, correctAnswer);
       this.displayQuestion();

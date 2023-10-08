@@ -5,8 +5,8 @@ body, h1, p {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: Georgia, serif;
+    background-color: #f0f0f000;
     text-align: center;
 }
 
@@ -18,9 +18,9 @@ h1 {
 }
 
 #question-container {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background-color: #ffffff;
+    border: 1.5px solid #000000;
+    border-radius: 12px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
@@ -39,12 +39,13 @@ h1 {
 
 label {
     font-weight: bold;
+    color: #fff;
 }
 
 input[type="text"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #c4b9b9;
     border-radius: 5px;
     font-size: 16px;
     margin-top: 5px;
