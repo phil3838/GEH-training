@@ -10,8 +10,8 @@
     </div>
 
     <div id="answer-container">
-        <label for="answer">Ta réponse:</label>
        <input type="text" [(ngModel)]="userAnswer" #answerField (keydown.enter)="checkAnswer(answerField.value)" [disabled]="isInputDisabled" placeholder="Tape ta réponse ici">
+       <br>
        <button (click)="checkAnswer(userAnswer)">Confirme</button> 
     </div>
 
@@ -21,17 +21,20 @@
   <!-- Show red div when the answer is wrong -->
         <div *ngIf="!isCorrect" class="feedback wrong-feedback"> {{ previousQuestion }}  <br> Ta réponse: {{ previousUserAnswer }} <br> {{ previousAnswer }}</div>
     </div>
-    
-    <div class="score">
-        <h1 id="scoreTitle">Answer Score</h1>
-        <p>Correct Answers: <span id="goodScore"> {{ correctAnswerCtn }}</span></p>
-        <p>Wrong Answers: <span id="wrongScore"> {{ wrongAnswerCtn }}</span></p>
-        <p>Rate: <span id="wrongScore"> {{ rateCorrectAnswer }}</span></p>
-        <p>Time to answer (s): <span id="wrongScore"> {{ timeToAnswer }} </span></p>
-        <p>Mean time (s): <span id="wrongScore"> {{ meanOfTimes }} </span></p>
-
-
+    <br>
+    <br>
+    <div id="score-container">
+        <h1 id="scoreTitle">STATS</h1>
+        <p> Correct Answers: <span id="goodScore"> {{ correctAnswerCtn }}</span></p>
+        <p> Wrong Answers: <span id="wrongScore"> {{ wrongAnswerCtn }}</span></p>
+        <p> Rate: <span id="rate"> {{ rateCorrectAnswer }}</span></p>
+        <p> Time to answer (s): <span id="time"> {{ timeToAnswer }} </span></p>
+        <p> Mean time (s): <span id="meanTime"> {{ meanOfTimes }} </span></p>
     </div>
 
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
+    <br><br><br>
 </body>
 </html>
