@@ -1,6 +1,7 @@
 # GEH-training
 Application utilisant le Framework Angular pour pratiquer des questions de Génie en herbe
 
+![Image of the app](/geh-training/doc/2023-10-10_18-38.png)
 ## Utilisation en local 
 
 Assurer vous d'avoir installé Angular sur votre machine `https://angular.io/guide/setup-local` <br>
