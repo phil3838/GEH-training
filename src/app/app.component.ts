@@ -13,18 +13,18 @@ export class AppComponent implements OnInit {
   questionText = '';
   userAnswer = '';
   isCorrect: boolean | undefined;
-  quizStarted=false;
+  quizStarted = false;
   previousQuestion: string | undefined;
   previousAnswer: string | undefined;
   previousUserAnswer: string | undefined;
-  isInputDisabled=false;
+  isInputDisabled = false;
   //Score
-  correctAnswerCtn=0;
-  wrongAnswerCtn=0
+  correctAnswerCtn = 0;
+  wrongAnswerCtn = 0
   rateCorrectAnswer: string | undefined;
   //Time
-  startTime= 0;
-  endTime= 0;
+  startTime = 0;
+  endTime = 0;
   timeToAnswer: string | undefined;
   listOfTime: number[] = [];
   meanOfTimes: string | undefined;
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
       });
 
       // Shuffle the quiz data
-      this.quizData=this.quizService.shuffleMap(this.quizData);
+      this.quizData = this.quizService.shuffleMap(this.quizData);
 
       // Display the first question
       this.displayQuestion();
@@ -51,58 +51,58 @@ export class AppComponent implements OnInit {
   displayQuestion() {
     if (this.currentIndex < this.quizData.size) {
       this.questionText = Array.from(this.quizData.keys())[this.currentIndex];
-      this.userAnswer='';
+      this.userAnswer = '';
       //if an empty line is in the source.csv, it will skip it
-      if (this.questionText.length<5){
+      if (this.questionText.length < 5) {
         console.log("yo c'est vide");
         this.currentIndex++;
         this.displayQuestion();
       }
     } else {
-      this.userAnswer='';
-      this.isInputDisabled=true;
+      this.userAnswer = '';
+      this.isInputDisabled = true;
       this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
     }
-  this.startTime = performance.now();
+    this.startTime = performance.now();
   }
   updateRateCorrectAnswer() {
-    let rate=(this.correctAnswerCtn/(this.correctAnswerCtn+this.wrongAnswerCtn))*100;
-    this.rateCorrectAnswer=rate.toFixed(2).toString()+"%";
+    let rate = (this.correctAnswerCtn / (this.correctAnswerCtn + this.wrongAnswerCtn)) * 100;
+    this.rateCorrectAnswer = rate.toFixed(2).toString() + "%";
   }
 
   checkAnswer(userAnswer: string) {
     this.calculateTime();
-    this.quizStarted=true;
+    this.quizStarted = true;
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
-    const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""),'i');
-    if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+    const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), 'i');
+    if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && userAnswer.trim() !== "") {
       this.currentIndex++;
-      this.feedback(true, this.questionText, correctAnswer,userAnswer);
+      this.feedback(true, this.questionText, correctAnswer, userAnswer);
       this.displayQuestion();
       this.correctAnswerCtn++;
-    this.updateRateCorrectAnswer()
+      this.updateRateCorrectAnswer()
       return true;
     } else {
       this.currentIndex++;
-      this.feedback(false, this.questionText, correctAnswer,userAnswer);
+      this.feedback(false, this.questionText, correctAnswer, userAnswer);
       this.displayQuestion();
       this.wrongAnswerCtn++;
-    this.updateRateCorrectAnswer()
+      this.updateRateCorrectAnswer()
       return false;
     }
   }
 
-  feedback(positive: boolean, question: string, answer: string,userAnswer:string) {
-    this.isCorrect=positive;     
-    this.previousQuestion=question;
-    this.previousAnswer=answer;
-    this.previousUserAnswer=userAnswer;
+  feedback(positive: boolean, question: string, answer: string, userAnswer: string) {
+    this.isCorrect = positive;
+    this.previousQuestion = question;
+    this.previousAnswer = answer;
+    this.previousUserAnswer = userAnswer;
   }
 
-  calculateTime(){
-    this.endTime=performance.now();
-    this.listOfTime.push((this.endTime-this.startTime)/1000);
-    this.timeToAnswer=((this.endTime-this.startTime)/1000).toFixed(1);
+  calculateTime() {
+    this.endTime = performance.now();
+    this.listOfTime.push((this.endTime - this.startTime) / 1000);
+    this.timeToAnswer = ((this.endTime - this.startTime) / 1000).toFixed(1);
     const totalElapsedTime = this.listOfTime.reduce((acc, time) => acc + time, 0);
     const mean = totalElapsedTime / this.listOfTime.length;
     this.meanOfTimes = mean.toFixed(2);
