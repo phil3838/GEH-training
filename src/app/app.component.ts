@@ -108,6 +108,13 @@ export class AppComponent implements OnInit {
     this.meanOfTimes = mean.toFixed(2);
   }
 
+  cancelLastAnswer() {
+   this.isCorrect = true;
+   this.wrongAnswerCtn--;
+   this.correctAnswerCtn++;
+   this.updateRateCorrectAnswer()
+  }
+
 
 
 

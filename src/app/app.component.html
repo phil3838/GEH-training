@@ -16,11 +16,14 @@
     </div>
 
     <div id="result" *ngIf="quizStarted">
-  <!-- Show green div when the answer is correct -->
         <div *ngIf="isCorrect" class="feedback correct-feedback"> {{ previousQuestion }} <br>  {{ previousAnswer }}</div>
-  <!-- Show red div when the answer is wrong -->
-        <div *ngIf="!isCorrect" class="feedback wrong-feedback"> {{ previousQuestion }}  <br> Ta réponse: {{ previousUserAnswer }} <br> {{ previousAnswer }}</div>
+        <div *ngIf="!isCorrect" class="feedback wrong-feedback"> {{ previousQuestion }}  <br> {{ previousUserAnswer }} <br> {{ previousAnswer }}</div>
     </div>
+
+    <div id="result" *ngIf="quizStarted">
+        <button *ngIf="!isCorrect" (click)="cancelLastAnswer()">Ma réponse était bonne !!!</button> 
+    </div>
+
     <br>
     <br>
     <div id="score-container">
