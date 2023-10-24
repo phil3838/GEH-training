@@ -1,0 +1,20 @@
+div {
+  width: 200px;
+  height: 200px;
+  border: 10px solid #f32177;
+  background-color: #f7f7f7;
+  border-radius: 50%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  background: #30353b;
+}
+
+* {
+  box-sizing: border-box;
+}
