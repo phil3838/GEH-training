@@ -28,8 +28,8 @@ export class AppComponent implements OnInit {
   timeToAnswer: string | undefined;
   listOfTime: number[] = [];
   meanOfTimes: string | undefined;
-  tts=false;
-  
+  tts = false;
+
 
   constructor(private quizService: QuizService) { }
 
@@ -66,9 +66,9 @@ export class AppComponent implements OnInit {
       this.isInputDisabled = true;
       this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
     }
-    if (this.tts){
-    await new Promise(resolve => setTimeout(resolve, 2500));
-    this.speak();
+    if (this.tts) {
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      this.speak();
     }
     this.startTime = performance.now();
   }
@@ -83,6 +83,7 @@ export class AppComponent implements OnInit {
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
     const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), 'i');
     if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && userAnswer.trim() !== "") {
+      this.correctAnswerSound();
       this.currentIndex++;
       this.feedback(true, this.questionText, correctAnswer, userAnswer);
       this.displayQuestion();
@@ -90,6 +91,7 @@ export class AppComponent implements OnInit {
       this.updateRateCorrectAnswer()
       return true;
     } else {
+      this.wrongAnswerSound();
       this.currentIndex++;
       this.feedback(false, this.questionText, correctAnswer, userAnswer);
       this.displayQuestion();
@@ -124,24 +126,32 @@ export class AppComponent implements OnInit {
 
   speak() {
     const speech = new SpeechSynthesisUtterance();
-    speech.lang = 'fr-CA'; 
-    speech.text = this.questionText;  
-   
+    speech.lang = 'fr-CA';
+    speech.text = this.questionText;
 
-    
+
+
     window.speechSynthesis.speak(speech);
   }
 
   turnOnTTS() {
-    this.tts=true;
+    this.tts = true;
     this.speak();
   }
 
-  turnOffTTS(){
-    this.tts=false;
+  turnOffTTS() {
+    this.tts = false;
   }
 
+  wrongAnswerSound() {
+    const audioElement = document.getElementById('wronganswer-sound') as HTMLAudioElement;
+    audioElement.play();
+  }
 
+  correctAnswerSound() {
+    const audioElement = document.getElementById('correctanswer-sound') as HTMLAudioElement;
+    audioElement.play();
+  }
 
 
 }
