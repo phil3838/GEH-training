@@ -13,7 +13,10 @@
          <button *ngIf="tts" (click)="speak()">Répéter la question svp</button> 
     </div>
 
-<br><br>
+<br>
+    <img src="assets/waveform.gif" alt="ai gif thing" *ngIf="tts" width="400" height="300">
+
+
     <div id="question-container" *ngIf="!tts"> 
         <p id="question" >{{ questionText }}</p>
     </div>
