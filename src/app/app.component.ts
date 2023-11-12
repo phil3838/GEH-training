@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
     } else {
       this.userAnswer = '';
       this.isInputDisabled = true;
-      this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
+      this.questionText = 'Y reste pu de questions mon fou ! <3';// Quiz is finished
     }
     if (this.tts) {
       await new Promise(resolve => setTimeout(resolve, 2500));
@@ -128,8 +128,6 @@ export class AppComponent implements OnInit {
     const speech = new SpeechSynthesisUtterance();
     speech.lang = 'fr-CA';
     speech.text = this.questionText;
-
-
 
     window.speechSynthesis.speak(speech);
   }
