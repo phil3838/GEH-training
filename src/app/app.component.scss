@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: #fd98008c;
+    background-color: #413e398c;
     text-align: center;
 }
 
@@ -49,7 +49,7 @@ input[type="text"] {
 }
 
 button {
-    background-color: #ff9900;
+    background-color: #202020;
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -90,4 +90,23 @@ button:hover {
 #scoreTitle {
     color: #333;
     text-align: center;
+}
+
+#audio-boolean {
+  margin-top: 20px; // Add some top margin for spacing
+  text-align: center; // Center align the content
+
+  button {
+    padding: 10px 20px; // Adjust the padding as needed
+    font-size: 16px; // Adjust the font size as needed
+    background-color: #202020; // Set the background color
+    color: #fff; // Set the text color
+    border: none; // Remove the button border
+    cursor: pointer; // Show a pointer cursor on hover
+    outline: none; // Remove the button outline on focus
+
+    &:hover {
+      background-color: #0056b3; // Change the background color on hover
+    }
+  }
 }

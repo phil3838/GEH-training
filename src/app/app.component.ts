@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
   timeToAnswer: string | undefined;
   listOfTime: number[] = [];
   meanOfTimes: string | undefined;
+  tts = false;
+
 
   constructor(private quizService: QuizService) { }
 
@@ -48,20 +50,25 @@ export class AppComponent implements OnInit {
     });
   }
 
-  displayQuestion() {
+  async displayQuestion() {
     if (this.currentIndex < this.quizData.size) {
+
+
       this.questionText = Array.from(this.quizData.keys())[this.currentIndex];
       this.userAnswer = '';
       //if an empty line is in the source.csv, it will skip it
       if (this.questionText.length < 5) {
-        console.log("yo c'est vide");
         this.currentIndex++;
         this.displayQuestion();
       }
     } else {
       this.userAnswer = '';
       this.isInputDisabled = true;
-      this.questionText = 'Y reste pu de questions mon fou !';// Quiz is finished
+      this.questionText = 'Y reste pu de questions mon fou ! <3';// Quiz is finished
+    }
+    if (this.tts) {
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      this.speak();
     }
     this.startTime = performance.now();
   }
@@ -76,6 +83,7 @@ export class AppComponent implements OnInit {
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
     const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), 'i');
     if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && userAnswer.trim() !== "") {
+      this.correctAnswerSound();
       this.currentIndex++;
       this.feedback(true, this.questionText, correctAnswer, userAnswer);
       this.displayQuestion();
@@ -83,6 +91,7 @@ export class AppComponent implements OnInit {
       this.updateRateCorrectAnswer()
       return true;
     } else {
+      this.wrongAnswerSound();
       this.currentIndex++;
       this.feedback(false, this.questionText, correctAnswer, userAnswer);
       this.displayQuestion();
@@ -109,13 +118,38 @@ export class AppComponent implements OnInit {
   }
 
   cancelLastAnswer() {
-   this.isCorrect = true;
-   this.wrongAnswerCtn--;
-   this.correctAnswerCtn++;
-   this.updateRateCorrectAnswer()
+    this.isCorrect = true;
+    this.wrongAnswerCtn--;
+    this.correctAnswerCtn++;
+    this.updateRateCorrectAnswer()
   }
 
+  speak() {
+    const speech = new SpeechSynthesisUtterance();
+    speech.lang = 'fr-CA';
+    speech.text = this.questionText;
 
+    window.speechSynthesis.speak(speech);
+  }
+
+  turnOnTTS() {
+    this.tts = true;
+    this.speak();
+  }
+
+  turnOffTTS() {
+    this.tts = false;
+  }
+
+  wrongAnswerSound() {
+    const audioElement = document.getElementById('wronganswer-sound') as HTMLAudioElement;
+    audioElement.play();
+  }
+
+  correctAnswerSound() {
+    const audioElement = document.getElementById('correctanswer-sound') as HTMLAudioElement;
+    audioElement.play();
+  }
 
 
 }

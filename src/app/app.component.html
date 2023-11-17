@@ -4,11 +4,24 @@
     <title>Génie en Herbe</title>
 </head>
 <body>
-    <br><br><br>
-    <div id="question-container">
-        <p id="question">{{ questionText }}</p>
+  
+   <!-- <router-outlet></router-outlet> -->
+    <div id="audio-boolean">
+        <button *ngIf="!tts" (click)="turnOnTTS()">Mode Audio</button> 
+         <button *ngIf="tts" (click)="turnOffTTS()">Mode Texte</button> 
+         <br>
+         <button *ngIf="tts" (click)="speak()">Répéter la question svp</button> 
     </div>
 
+<br>
+    <img src="assets/waveform.gif" alt="ai gif thing" *ngIf="tts" width="400" height="300">
+
+
+    <div id="question-container" *ngIf="!tts"> 
+        <p id="question" >{{ questionText }}</p>
+    </div>
+
+    
     <div id="answer-container">
        <input type="text" [(ngModel)]="userAnswer" #answerField (keydown.enter)="checkAnswer(answerField.value)" [disabled]="isInputDisabled" placeholder="Tape ta réponse ici">
        <br>
@@ -39,5 +52,8 @@
     <br><br><br>
     <br><br><br>
     <br><br><br>
+    <audio id="correctanswer-sound" src="assets/correctanswer.mp3"></audio>
+    <audio id="wronganswer-sound" src="assets/wronganswer.mp3"></audio>
+
 </body>
 </html>
