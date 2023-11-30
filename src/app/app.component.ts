@@ -81,6 +81,11 @@ export class AppComponent implements OnInit {
     this.calculateTime();
     this.quizStarted = true;
     const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
+
+    if (userAnswer.startsWith('+')) {
+        userAnswer = "\\" + userAnswer;
+    }
+  
     const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), 'i');
     if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && userAnswer.trim() !== "") {
       this.correctAnswerSound();
