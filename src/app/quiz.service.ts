@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
+
+
+  list = new Map<string, string>();
+  probabilityOfLearning = 0.2;
+
+
   constructor(private http: HttpClient) { }
 
   getQuizData() {
@@ -21,9 +28,46 @@ export class QuizService {
     }
 
     // Create a new Map with the shuffled values and the original keys
-    const shuffledMap = new Map<string, string>(entries); 
+    const shuffledMap = new Map<string, string>(entries);
 
     return shuffledMap;
+  }
 
+  addQuestionToLearning(question: string, answer: string) {
+    this.list.set(question, answer);
+  }
+
+  nextIsWrong(): boolean {
+    if (this.list.size === 0) {
+      return false;
+    }
+    const randomNumber = Math.random();
+
+    // Check if the random number is less than 0.05 (which is 5% of the time)
+    return randomNumber < this.probabilityOfLearning;
+  }
+
+  getFromLearning(): { learningQuestion: string, learningAnswer: string } {
+    this.list = this.shuffleMap(this.list);
+
+    this.list.forEach((value, key) => {
+      console.log(`Key: ${key}, Value: ${value}`);
+    });
+
+    const iterator = this.list.entries();
+    const firstEntry = iterator.next().value;
+
+    const learningQuestion = firstEntry[0];
+    const learningAnswer = firstEntry[1];
+
+    return { learningQuestion, learningAnswer };
+  }
+
+  deleteFromLearning(question: string) {
+    if (this.list.has(question)) {
+      this.list.delete(question);
+    } else {
+      console.log("question doesn't exist in the learning list")
+    }
   }
 }

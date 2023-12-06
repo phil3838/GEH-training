@@ -12,9 +12,10 @@ export class AppComponent implements OnInit {
   currentIndex = 0;
   questionText = '';
   userAnswer = '';
+  correctAnswer = '';
   isCorrect: boolean | undefined;
   quizStarted = false;
-  previousQuestion: string | undefined;
+  previousQuestion= '';
   previousAnswer: string | undefined;
   previousUserAnswer: string | undefined;
   isInputDisabled = false;
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit {
   listOfTime: number[] = [];
   meanOfTimes: string | undefined;
   tts = false;
+  isLearningQuestion=false;
+  
 
 
   constructor(private quizService: QuizService) { }
@@ -51,10 +54,20 @@ export class AppComponent implements OnInit {
   }
 
   async displayQuestion() {
+
+    if(this.quizService.nextIsWrong()){
+      //this.currentIndex--;
+      let {learningQuestion, learningAnswer}  = this.quizService.getFromLearning()
+      this.questionText=learningQuestion
+      this.correctAnswer=learningAnswer
+      this.isLearningQuestion=true
+      this.userAnswer = '';
+     // console.log("this is a learning question POGGGGG")
+    }
+    else{
     if (this.currentIndex < this.quizData.size) {
-
-
       this.questionText = Array.from(this.quizData.keys())[this.currentIndex];
+      this.correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
       this.userAnswer = '';
       //if an empty line is in the source.csv, it will skip it
       if (this.questionText.length < 5) {
@@ -66,10 +79,13 @@ export class AppComponent implements OnInit {
       this.isInputDisabled = true;
       this.questionText = 'Y reste pu de questions mon fou ! <3';// Quiz is finished
     }
+  }
+
     if (this.tts) {
       await new Promise(resolve => setTimeout(resolve, 2500));
       this.speak();
     }
+
     this.startTime = performance.now();
   }
   updateRateCorrectAnswer() {
@@ -80,17 +96,20 @@ export class AppComponent implements OnInit {
   checkAnswer(userAnswer: string) {
     this.calculateTime();
     this.quizStarted = true;
-    const correctAnswer = Array.from(this.quizData.values())[this.currentIndex];
 
     if (userAnswer.startsWith('+')) {
         userAnswer = "\\" + userAnswer;
     }
   
     const pattern = new RegExp(userAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), 'i');
-    if (pattern.test(correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && userAnswer.trim() !== "") {
+    if (pattern.test(this.correctAnswer.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && userAnswer.trim() !== "") {
+      if (this.isLearningQuestion){
+        this.quizService.deleteFromLearning(this.questionText)
+        this.isLearningQuestion=false
+      }
       this.correctAnswerSound();
       this.currentIndex++;
-      this.feedback(true, this.questionText, correctAnswer, userAnswer);
+      this.feedback(true, this.questionText, this.correctAnswer, userAnswer);
       this.displayQuestion();
       this.correctAnswerCtn++;
       this.updateRateCorrectAnswer()
@@ -98,10 +117,11 @@ export class AppComponent implements OnInit {
     } else {
       this.wrongAnswerSound();
       this.currentIndex++;
-      this.feedback(false, this.questionText, correctAnswer, userAnswer);
+      this.feedback(false, this.questionText, this.correctAnswer, userAnswer);
       this.displayQuestion();
       this.wrongAnswerCtn++;
       this.updateRateCorrectAnswer()
+      this.quizService.addQuestionToLearning(this.questionText,this.correctAnswer)
       return false;
     }
   }
@@ -128,6 +148,7 @@ export class AppComponent implements OnInit {
     this.wrongAnswerCtn--;
     this.correctAnswerCtn++;
     this.updateRateCorrectAnswer()
+    this.quizService.deleteFromLearning(this.previousQuestion)
   }
 
   speak() {
