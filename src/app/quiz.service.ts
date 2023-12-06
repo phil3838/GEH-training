@@ -9,7 +9,8 @@ export class QuizService {
 
 
   list = new Map<string, string>();
-  probabilityOfLearning = 0.2;
+  probabilityOfLearning = 0.2; 
+  disabled = false;
 
 
   constructor(private http: HttpClient) { }
@@ -41,15 +42,21 @@ export class QuizService {
     if (this.list.size === 0) {
       return false;
     }
+    else if (this.disabled){
+      return false;
+    } else{
+
     const randomNumber = Math.random();
 
     // Check if the random number is less than 0.05 (which is 5% of the time)
     return randomNumber < this.probabilityOfLearning;
+    }
   }
 
   getFromLearning(): { learningQuestion: string, learningAnswer: string } {
     this.list = this.shuffleMap(this.list);
-
+  
+    console.log("*** Getting From Learning ***")
     this.list.forEach((value, key) => {
       console.log(`Key: ${key}, Value: ${value}`);
     });
@@ -69,5 +76,12 @@ export class QuizService {
     } else {
       console.log("question doesn't exist in the learning list")
     }
+  }
+
+  enableLearning(){
+    this.disabled=false;
+  }
+  disableLearning(){
+    this.disabled=true;
   }
 }

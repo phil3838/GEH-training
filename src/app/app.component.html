@@ -9,6 +9,8 @@
     <div id="audio-boolean">
         <button *ngIf="!tts" (click)="turnOnTTS()">Mode Audio</button> 
          <button *ngIf="tts" (click)="turnOffTTS()">Mode Texte</button> 
+        <input type="checkbox" id="audio-checkbox" (change)="onCheckboxChange($event)" checked>
+        <label for="training-checkbox">Mode Training</label>
          <br>
          <button *ngIf="tts" (click)="speak()">Répéter la question svp</button> 
     </div>

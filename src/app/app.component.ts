@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   isCorrect: boolean | undefined;
   quizStarted = false;
   previousQuestion= '';
-  previousAnswer: string | undefined;
+  previousAnswer= '';
   previousUserAnswer: string | undefined;
   isInputDisabled = false;
   //Score
@@ -121,7 +121,8 @@ export class AppComponent implements OnInit {
       this.displayQuestion();
       this.wrongAnswerCtn++;
       this.updateRateCorrectAnswer()
-      this.quizService.addQuestionToLearning(this.questionText,this.correctAnswer)
+      this.quizService.addQuestionToLearning(this.previousQuestion,this.previousAnswer)
+
       return false;
     }
   }
@@ -177,6 +178,17 @@ export class AppComponent implements OnInit {
     const audioElement = document.getElementById('correctanswer-sound') as HTMLAudioElement;
     audioElement.play();
   }
+
+   onCheckboxChange(event: Event) {
+        const checkbox = event.target as HTMLInputElement;
+        if (checkbox.checked) {
+            // Code to execute when checkbox is checked
+            this.quizService.enableLearning();
+        } else {
+            // Code to execute when checkbox is unchecked
+            this.quizService.disableLearning();
+        }
+    }
 
 
 }
