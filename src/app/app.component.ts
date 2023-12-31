@@ -150,6 +150,11 @@ export class AppComponent implements OnInit {
     this.correctAnswerCtn++;
     this.updateRateCorrectAnswer()
     this.quizService.deleteFromLearning(this.previousQuestion)
+    if (this.previousQuestion==this.questionText){
+      console.log("I am here guys, trying to change the question")
+      this.currentIndex++;
+      this.displayQuestion();
+    }
   }
 
   speak() {
