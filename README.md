@@ -9,6 +9,15 @@ Assurer vous d'avoir installé Angular sur votre machine `https://angular.io/gui
 Enter la commande `ng serve` dans le directory du repo .<br>
 Aller sur la page `http://localhost:4200/` et vous êtes prêt à jouer!
 
+## Guide d'installation
+1. Installe Node https://nodejs.org/en/download/prebuilt-installer/current
+2. Download le zip
+3. Ouvre un terminal dans le dossier extrait
+4. npm install
+5. npm install -g @angular/cli
+6. ng serve
+7. Ouvre http://localhost:4200/ :6f143bc7a110970a:
+
 ## Questions
 
 Les questions sont stockées en format .csv pour le moment <br>
