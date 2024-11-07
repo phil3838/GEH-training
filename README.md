@@ -13,9 +13,9 @@ Aller sur la page `http://localhost:4200/` et vous êtes prêt à jouer!
 1. Installe Node https://nodejs.org/en/download/prebuilt-installer/current
 2. Download le zip
 3. Ouvre un terminal dans le dossier extrait
-4. npm install
-5. npm install -g @angular/cli
-6. ng serve
+4. `npm install`
+5. `npm install -g @angular/cli`
+6. `ng serve`
 7. Ouvre http://localhost:4200/ :6f143bc7a110970a:
 
 ## Questions
