@@ -16,7 +16,7 @@ Aller sur la page `http://localhost:4200/` et vous êtes prêt à jouer!
 4. `npm install`
 5. `npm install -g @angular/cli`
 6. `ng serve -o`
-7. Ouvre http://localhost:4200/ :6f143bc7a110970a:
+7. Ouvre http://localhost:4200/
 
 ## Questions
 
