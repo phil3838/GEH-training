@@ -6,7 +6,7 @@ Application utilisant le Framework Angular pour pratiquer des questions de Géni
 ## Utilisation en local 
 
 Assurer vous d'avoir installé Angular sur votre machine `https://angular.io/guide/setup-local` <br>
-Enter la commande `ng serve` dans le directory du repo .<br>
+Enter la commande `ng serve -o` dans le directory du repo .<br>
 Aller sur la page `http://localhost:4200/` et vous êtes prêt à jouer!
 
 ## Guide d'installation
@@ -15,7 +15,7 @@ Aller sur la page `http://localhost:4200/` et vous êtes prêt à jouer!
 3. Ouvre un terminal dans le dossier extrait
 4. `npm install`
 5. `npm install -g @angular/cli`
-6. `ng serve`
+6. `ng serve -o`
 7. Ouvre http://localhost:4200/ :6f143bc7a110970a:
 
 ## Questions
