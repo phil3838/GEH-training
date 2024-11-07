@@ -10,14 +10,14 @@ Enter la commande `ng serve -o` dans le directory du repo .<br>
 Aller sur la page `http://localhost:4200/` et vous êtes prêt à jouer!
 
 ## Guide d'installation
-1. Installe Node [Node](https://nodejs.org/en/download/prebuilt-installer/current)
+1. [Installe Node](https://nodejs.org/en/download/prebuilt-installer/current)
 
 2. Download le zip
 3. Ouvre un terminal dans le dossier extrait
 4. `npm install`
 5. `npm install -g @angular/cli`
 6. `ng serve -o`
-7. Ouvre [](http://localhost:4200/)
+7. Ouvre [http://localhost:4200/](http://localhost:4200/)
 
 ## Questions
 
