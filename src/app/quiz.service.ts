@@ -9,14 +9,14 @@ export class QuizService {
 
 
   list = new Map<string, string>();
-  probabilityOfLearning = 0.29; 
+  probabilityOfLearning = 0.20; 
   disabled = false;
 
 
   constructor(private http: HttpClient) { }
 
   getQuizData() {
-    return this.http.get('assets/source.csv', { responseType: 'text' })
+    return this.http.get('assets/questions/2024-11-13.csv', { responseType: 'text' })
   }
 
   shuffleMap(map: Map<string, string>) {

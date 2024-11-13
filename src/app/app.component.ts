@@ -41,8 +41,15 @@ export class AppComponent implements OnInit {
       const lines = data.split('\n');
 
       lines.forEach((line) => {
-        const [question, answer] = line.split(',');
-        this.quizData.set(question, answer);
+        // Regular expression to split by comma, ignoring commas within quotes
+        const match = line.match(/("(?:[^"]|"")*"|[^,]+)/g);
+        
+        if (match && match.length >= 2) {
+          // Remove quotes if present
+          const question = match[0].replace(/^"|"$/g, '');
+          const answer = match[1].replace(/^"|"$/g, '');
+          this.quizData.set(question, answer);
+        }
       });
 
       // Shuffle the quiz data
