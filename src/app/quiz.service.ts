@@ -16,7 +16,7 @@ export class QuizService {
   constructor(private http: HttpClient) { }
 
   getQuizData() {
-    return this.http.get('assets/questions/2024-11-19.csv', { responseType: 'text' })
+    return this.http.get('assets/questions/source.csv', { responseType: 'text' })
   }
 
   shuffleMap(map: Map<string, string>) {
