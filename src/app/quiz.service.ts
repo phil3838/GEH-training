@@ -9,7 +9,7 @@ export class QuizService {
 
 
   list = new Map<string, string>();
-  probabilityOfLearning = 0.20; 
+  probabilityOfLearning = 0.14; 
   disabled = false;
 
 
