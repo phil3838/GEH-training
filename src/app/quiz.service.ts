@@ -22,16 +22,15 @@ export class QuizService {
   shuffleMap(map: Map<string, string>) {
     const entries = Array.from(map.entries());
 
-    // Shuffle the array of values
     for (let i = entries.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const randomArray = new Uint32Array(1);
+      crypto.getRandomValues(randomArray);
+      const j = randomArray[0] % (i + 1);
+
       [entries[i], entries[j]] = [entries[j], entries[i]];
     }
 
-    // Create a new Map with the shuffled values and the original keys
-    const shuffledMap = new Map<string, string>(entries);
-
-    return shuffledMap;
+    return new Map<string, string>(entries);;
   }
 
   addQuestionToLearning(question: string, answer: string) {
@@ -62,7 +61,7 @@ export class QuizService {
     });
 
     const iterator = this.list.entries();
-    const firstEntry = iterator.next().value;
+    const firstEntry = iterator.next().value!;
 
     const learningQuestion = firstEntry[0];
     const learningAnswer = firstEntry[1];
